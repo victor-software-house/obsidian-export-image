@@ -37,6 +37,7 @@ const result = await esbuild
       '@lezer/lr',
       ...builtins,
     ],
+    jsx: 'automatic',
     format: 'cjs',
     // watch: !prod,
     target: 'esnext',
