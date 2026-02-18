@@ -256,11 +256,18 @@ If your plugin does not need CSS, delete this file.
   display: none !important;
 }
 
-/* Show gutter when enabled - restore original CM layout */
+/* Show gutter when enabled */
+.show-gutter .cm-contentContainer {
+  display: flex !important;
+  align-items: stretch;
+}
 .show-gutter .export-image-gutter {
   display: flex !important;
-  position: relative !important;
-  min-height: 0 !important;
+  flex-shrink: 0;
+}
+.show-gutter .cm-content {
+  flex: 1;
+  min-width: 0;
 }
 
 .export-image-split-hr hr {

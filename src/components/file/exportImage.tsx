@@ -124,10 +124,17 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         ? contentContainer.cloneNode(true) as HTMLElement
         : document.createElement('div');
 
-      // Tag the gutter so CSS can toggle its visibility
+      // Tag the gutter and strip editor-specific inline styles
       const gutterInClone = containerClone.querySelector('.cm-gutters');
       if (gutterInClone) {
         (gutterInClone as HTMLElement).classList.add('export-image-gutter');
+        (gutterInClone as HTMLElement).style.cssText = '';
+      }
+
+      // Strip editor padding from content
+      const contentInClone = containerClone.querySelector('.cm-content');
+      if (contentInClone) {
+        (contentInClone as HTMLElement).style.paddingBottom = '0';
       }
 
       // Clean up editor-only elements
