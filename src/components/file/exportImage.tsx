@@ -124,14 +124,14 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         ? contentContainer.cloneNode(true) as HTMLElement
         : document.createElement('div');
 
-      // Tag the gutter and strip editor-specific inline styles
+      // Tag the gutter; only strip min-height (editor document height)
       const gutterInClone = containerClone.querySelector('.cm-gutters');
       if (gutterInClone) {
         (gutterInClone as HTMLElement).classList.add('export-image-gutter');
-        (gutterInClone as HTMLElement).style.cssText = '';
+        (gutterInClone as HTMLElement).style.minHeight = '0';
       }
 
-      // Strip editor padding from content
+      // Strip editor scroll padding from content
       const contentInClone = containerClone.querySelector('.cm-content');
       if (contentInClone) {
         (contentInClone as HTMLElement).style.paddingBottom = '0';

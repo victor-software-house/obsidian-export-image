@@ -256,18 +256,20 @@ If your plugin does not need CSS, delete this file.
   display: none !important;
 }
 
-/* Show gutter when enabled */
+/* Show gutter when enabled - grid forces equal row height */
 .show-gutter .cm-contentContainer {
-  display: flex !important;
-  align-items: stretch;
+  display: grid !important;
+  grid-template-columns: auto 1fr;
 }
 .show-gutter .export-image-gutter {
   display: flex !important;
-  flex-shrink: 0;
+  min-height: 0 !important;
+  grid-column: 1;
+  grid-row: 1;
 }
 .show-gutter .cm-content {
-  flex: 1;
-  min-width: 0;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .export-image-split-hr hr {
