@@ -69,6 +69,10 @@ const ru = {
     metadata: {
       label: 'Показать метаданные',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Формат выходного файла',
       description:

@@ -97,6 +97,12 @@ export const createSettingConfig = async (app: App): Promise<SettingItem[]> => {
       type: 'toggle',
     },
     {
+      id: 'showGutter',
+      label: L.setting.gutter.label(),
+      description: L.setting.gutter.description(),
+      type: 'toggle',
+    },
+    {
       id: 'resolutionMode',
       label: L.setting.resolutionMode.label(),
       description: L.setting.resolutionMode.description(),

@@ -80,6 +80,11 @@ const formSchema: FormSchema<ISettings> = [
     when: (settings) => settings.split.mode === 'fixed',
   },
   {
+    label: L.setting.gutter.label(),
+    path: 'showGutter',
+    type: 'boolean',
+  },
+  {
     label: L.setting.userInfo.show(),
     path: 'authorInfo.show',
     type: 'boolean',

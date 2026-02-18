@@ -67,6 +67,10 @@ const hu = {
     metadata: {
       label: 'Metaadatok megjelenítése',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Kimeneti fájl formátum',
       description:

@@ -99,6 +99,44 @@ const Target = forwardRef<
     });
   }, [markdownEl]);
 
+  // Recalculate gutter element positions to match reflowed content headings.
+  // CM6 bakes pixel-precise height/margin-top for the editor width; after
+  // cloning we strip those and recompute here for the export width.
+  useEffect(() => {
+    if (!contentRef.current || !setting.showGutter) return;
+    const gutter = contentRef.current.querySelector<HTMLElement>('.export-image-gutter');
+    const content = contentRef.current.querySelector<HTMLElement>('.cm-content');
+    if (!gutter || !content) return;
+
+    const sync = () => {
+      requestAnimationFrame(() => {
+        const headings = content.querySelectorAll<HTMLElement>('[class*="HyperMD-header"]');
+        const gutterEls = gutter.querySelectorAll<HTMLElement>('.cm-gutterElement');
+        const contentTop = content.offsetTop;
+
+        // Position each gutter element to align with its corresponding heading
+        let gutterBottom = 0;
+        gutterEls.forEach((gel, i) => {
+          const heading = headings[i];
+          if (!heading) return;
+          const headingTop = heading.offsetTop - contentTop;
+          const gap = headingTop - gutterBottom;
+          gel.style.marginTop = gap > 0 ? `${gap}px` : '0';
+          gel.style.height = `${heading.offsetHeight}px`;
+          gutterBottom = headingTop + heading.offsetHeight;
+        });
+
+        gutter.style.height = `${content.offsetHeight}px`;
+      });
+    };
+
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(content);
+    observer.observe(contentRef.current);
+    return () => observer.disconnect();
+  }, [markdownEl, setting.showGutter, setting.width]);
+
   useImperativeHandle(ref, () => ({
     element: clipRef.current!,
     contentElement: rootRef.current!,
@@ -190,7 +228,7 @@ const Target = forwardRef<
                   </div>
                 </div>
               )}
-            <div ref={contentRef} className={`export-image-split-${setting.split.mode} export-image-markdown`}></div>
+            <div ref={contentRef} className={clsx(`export-image-split-${setting.split.mode} export-image-markdown`, setting.showGutter && 'show-gutter')}></div>
           </div>
         </Watermark>
         {setting.authorInfo.show

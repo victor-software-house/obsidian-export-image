@@ -71,6 +71,10 @@ const ja = {
     metadata: {
       label: 'メタデータを表示',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: '出力ファイル形式',
       description: 'デフォルトのPNG形式の画像でほとんどのニーズを満たすはずですが、ユーザーシナリオをより良くサポートするために：1. 通常の背景および透明背景の画像をエクスポートするサポート；2. JPG画像をエクスポートしてファイルサイズを小さくするサポート、ただしクリップボードに直接コピーすることはできないかもしれません；3. 単一ページのPDF形式にエクスポートするサポート、通常のPDF紙の形式とは異なりますので、誤用しないように注意してください。',

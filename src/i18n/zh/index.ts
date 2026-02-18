@@ -73,6 +73,10 @@ const zh = {
     metadata: {
       label: '显示 metadata',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: '输出文件格式',
       description:

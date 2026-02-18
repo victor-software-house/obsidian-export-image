@@ -71,6 +71,10 @@ const it = {
     metadata: {
       label: 'Mostra metadata',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Formato file di output',
       description: 'Il formato png predefinito dovrebbe soddisfare la maggior parte delle esigenze, ma per supportare meglio gli scenari utente: 1. Supporta l\'esportazione di immagini con sfondo normale e trasparente; 2. Supporta l\'esportazione di immagini jpg per ottenere dimensioni di file più piccole, ma potrebbe non essere possibile copiare direttamente negli appunti; 3. Supporta l\'esportazione in pdf a pagina singola, che è diverso dal formato carta pdf usuale, si prega di non utilizzarlo erroneamente.',

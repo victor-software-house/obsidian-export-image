@@ -66,6 +66,10 @@ const ms = {
     metadata: {
       label: 'Papar Metadata',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Format Fail Output',
       description:

@@ -118,23 +118,35 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
       await delay(500);
       view.editor.scrollTo(0, 0);
 
-      const contentDiv = view.contentEl.querySelector('.cm-content.cm-lineWrapping');
-      const tempDiv = document.createElement('div');
-      tempDiv.className = "markdown-source-view mod-cm6 is-live-preview";
-      
-      // 首先添加内容
-      tempDiv.innerHTML = contentDiv ? contentDiv.innerHTML : "";
-      
-      // 删除所有带有 cm-active class 的元素
-      tempDiv.querySelectorAll('.cm-active').forEach(el => el.classList.remove('cm-active'));
-      
-      // 删除所有 edit-block-button 和 callout-fold 元素
-      tempDiv.querySelectorAll('.edit-block-button, .callout-fold, .cm-widgetBuffer, .table-col-drag-handle, .cm-fold-indicator, .table-row-btn, .table-row-drag-handle, .table-col-btn, .table-row-drag-handle').forEach(el => el.remove());
-      
-      // 构建完整的HTML，包括样式
+      // Clone .cm-contentContainer which preserves the original gutter+content layout
+      const contentContainer = view.contentEl.querySelector('.cm-contentContainer');
+      const containerClone = contentContainer
+        ? contentContainer.cloneNode(true) as HTMLElement
+        : document.createElement('div');
+
+      // Tag the gutter and strip baked-in dimensions (recalculated in Target.tsx)
+      const gutterInClone = containerClone.querySelector('.cm-gutters');
+      if (gutterInClone) {
+        (gutterInClone as HTMLElement).classList.add('export-image-gutter');
+        (gutterInClone as HTMLElement).querySelectorAll<HTMLElement>('.cm-gutterElement').forEach(el => {
+          el.style.height = '';
+          el.style.marginTop = '';
+          el.style.paddingTop = '';
+        });
+      }
+
+      // Strip editor scroll padding
+      const contentInClone = containerClone.querySelector('.cm-content');
+      if (contentInClone) {
+        (contentInClone as HTMLElement).style.paddingBottom = '0';
+      }
+
+      // Clean up editor-only elements
+      containerClone.querySelectorAll('.cm-active').forEach(el => el.classList.remove('cm-active'));
+      containerClone.querySelectorAll('.edit-block-button, .callout-fold, .cm-widgetBuffer, .table-col-drag-handle, .cm-fold-indicator, .table-row-btn, .table-row-drag-handle, .table-col-btn, .table-row-drag-handle').forEach(el => el.remove());
+
       const cssStyles = `
         <style>
-          /* 可以在这里添加更多自定义样式 */
           /* 修复列表缩进在渲染时的问题 */
           .export-image-root .list-bullet {
               margin-left: -24px !important;
@@ -147,11 +159,13 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
           }
         </style>
       `;
-      
-      // 将div的HTML和样式组合起来
-      html = `<div class="export-image-root markdown-source-view mod-cm6 is-live-preview">
+
+      // Wrap in .cm-editor so CM6's own CSS rules (flex layout, word wrapping) apply
+      html = `<div class="markdown-source-view mod-cm6 is-live-preview">
+        <div class="cm-editor">
         ${cssStyles}
-        ${tempDiv.innerHTML}
+        ${containerClone.outerHTML}
+        </div>
       </div>`;
       
       codeMirror.viewState.printing = false;
