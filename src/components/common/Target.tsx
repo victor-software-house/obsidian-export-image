@@ -107,14 +107,17 @@ const Target = forwardRef<
     if (!gutter || !content) return;
 
     const sync = () => {
-      gutter.style.height = `${content.offsetHeight}px`;
+      requestAnimationFrame(() => {
+        gutter.style.height = `${content.offsetHeight}px`;
+      });
     };
 
     sync();
     const observer = new ResizeObserver(sync);
     observer.observe(content);
+    observer.observe(contentRef.current);
     return () => observer.disconnect();
-  }, [markdownEl, setting.showGutter]);
+  }, [markdownEl, setting.showGutter, setting.width]);
 
   useImperativeHandle(ref, () => ({
     element: clipRef.current!,
