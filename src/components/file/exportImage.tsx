@@ -124,34 +124,20 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         ? contentContainer.cloneNode(true) as HTMLElement
         : document.createElement('div');
 
-      // CM6 CSS targets `.cm-editor .cm-contentContainer` for flex layout.
-      // Outside .cm-editor the container is plain block, so replicate flex inline.
-      containerClone.style.display = 'flex';
-
-      // Tag the gutter; strip all baked-in editor dimensions.
-      // CM6 computes height/margin-top on each .cm-gutterElement to align
-      // with content lines at the editor's specific width. These pixel values
-      // are wrong at the export width (content reflows), so strip them all
-      // and let the gutter elements flow naturally.
+      // Tag the gutter and strip baked-in dimensions (recalculated in Target.tsx)
       const gutterInClone = containerClone.querySelector('.cm-gutters');
       if (gutterInClone) {
         (gutterInClone as HTMLElement).classList.add('export-image-gutter');
-        (gutterInClone as HTMLElement).style.minHeight = '0';
-        (gutterInClone as HTMLElement).style.height = 'auto';
-        (gutterInClone as HTMLElement).style.position = 'relative';
         (gutterInClone as HTMLElement).querySelectorAll<HTMLElement>('.cm-gutterElement').forEach(el => {
           el.style.height = '';
           el.style.marginTop = '';
         });
       }
 
-      // Strip editor scroll padding from content; replicate CM6 flex sizing
+      // Strip editor scroll padding
       const contentInClone = containerClone.querySelector('.cm-content');
       if (contentInClone) {
         (contentInClone as HTMLElement).style.paddingBottom = '0';
-        (contentInClone as HTMLElement).style.flex = '1';
-        (contentInClone as HTMLElement).style.minWidth = '0';
-        (contentInClone as HTMLElement).style.overflowWrap = 'anywhere';
       }
 
       // Clean up editor-only elements
@@ -173,9 +159,12 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         </style>
       `;
 
+      // Wrap in .cm-editor so CM6's own CSS rules (flex layout, word wrapping) apply
       html = `<div class="markdown-source-view mod-cm6 is-live-preview">
+        <div class="cm-editor">
         ${cssStyles}
         ${containerClone.outerHTML}
+        </div>
       </div>`;
       
       codeMirror.viewState.printing = false;

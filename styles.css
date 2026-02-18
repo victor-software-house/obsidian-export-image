@@ -243,15 +243,6 @@ If your plugin does not need CSS, delete this file.
   height: auto;
 }
 
-/* Fix cm-content width when rendered outside the CM editor layout */
-.export-image-markdown .cm-content {
-  flex: 1 !important;
-  min-width: 0 !important;
-}
-.export-image-markdown .cm-contentContainer {
-  width: 100%;
-}
-
 /* Gutter hidden by default */
 .export-image-gutter {
   display: none !important;
