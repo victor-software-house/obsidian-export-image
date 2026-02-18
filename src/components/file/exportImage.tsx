@@ -124,6 +124,10 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         ? contentContainer.cloneNode(true) as HTMLElement
         : document.createElement('div');
 
+      // CM6 CSS targets `.cm-editor .cm-contentContainer` for flex layout.
+      // Outside .cm-editor the container is plain block, so replicate flex inline.
+      containerClone.style.display = 'flex';
+
       // Tag the gutter; only strip min-height (editor document height)
       const gutterInClone = containerClone.querySelector('.cm-gutters');
       if (gutterInClone) {
@@ -132,10 +136,13 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         (gutterInClone as HTMLElement).style.position = 'relative';
       }
 
-      // Strip editor scroll padding from content
+      // Strip editor scroll padding from content; replicate CM6 flex sizing
       const contentInClone = containerClone.querySelector('.cm-content');
       if (contentInClone) {
         (contentInClone as HTMLElement).style.paddingBottom = '0';
+        (contentInClone as HTMLElement).style.flex = '1';
+        (contentInClone as HTMLElement).style.minWidth = '0';
+        (contentInClone as HTMLElement).style.overflowWrap = 'anywhere';
       }
 
       // Clean up editor-only elements
