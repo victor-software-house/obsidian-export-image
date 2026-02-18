@@ -118,31 +118,22 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
       await delay(500);
       view.editor.scrollTo(0, 0);
 
-      const contentDiv = view.contentEl.querySelector('.cm-content.cm-lineWrapping');
-      const tempDiv = document.createElement('div');
-      tempDiv.className = "markdown-source-view mod-cm6 is-live-preview";
+      // Clone .cm-contentContainer which preserves the original gutter+content layout
+      const contentContainer = view.contentEl.querySelector('.cm-contentContainer');
+      const containerClone = contentContainer
+        ? contentContainer.cloneNode(true) as HTMLElement
+        : document.createElement('div');
 
-      // 首先添加内容
-      tempDiv.innerHTML = contentDiv ? contentDiv.innerHTML : "";
-
-      // 删除所有带有 cm-active class 的元素
-      tempDiv.querySelectorAll('.cm-active').forEach(el => el.classList.remove('cm-active'));
-
-      // 删除所有 edit-block-button 和 callout-fold 元素
-      tempDiv.querySelectorAll('.edit-block-button, .callout-fold, .cm-widgetBuffer, .table-col-drag-handle, .cm-fold-indicator, .table-row-btn, .table-row-drag-handle, .table-col-btn, .table-row-drag-handle').forEach(el => el.remove());
-
-      // Clone gutter from the editor view
-      let gutterHtml = '';
-      const gutterEl = view.contentEl.querySelector('.cm-gutters');
-      if (gutterEl) {
-        const gutterClone = gutterEl.cloneNode(true) as HTMLElement;
-        gutterClone.classList.add('export-image-gutter');
-        // Strip CodeMirror inline styles that break layout outside the editor
-        gutterClone.style.cssText = '';
-        gutterHtml = gutterClone.outerHTML;
+      // Tag the gutter so CSS can toggle its visibility
+      const gutterInClone = containerClone.querySelector('.cm-gutters');
+      if (gutterInClone) {
+        (gutterInClone as HTMLElement).classList.add('export-image-gutter');
       }
 
-      // 构建完整的HTML，包括样式
+      // Clean up editor-only elements
+      containerClone.querySelectorAll('.cm-active').forEach(el => el.classList.remove('cm-active'));
+      containerClone.querySelectorAll('.edit-block-button, .callout-fold, .cm-widgetBuffer, .table-col-drag-handle, .cm-fold-indicator, .table-row-btn, .table-row-drag-handle, .table-col-btn, .table-row-drag-handle').forEach(el => el.remove());
+
       const cssStyles = `
         <style>
           /* 修复列表缩进在渲染时的问题 */
@@ -158,13 +149,9 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         </style>
       `;
 
-      // Wrap gutter and content in a flex container
-      html = `<div class="export-image-editor-wrapper">
-        ${gutterHtml}
-        <div class="markdown-source-view mod-cm6 is-live-preview">
-          ${cssStyles}
-          ${tempDiv.innerHTML}
-        </div>
+      html = `<div class="markdown-source-view mod-cm6 is-live-preview">
+        ${cssStyles}
+        ${containerClone.outerHTML}
       </div>`;
       
       codeMirror.viewState.printing = false;

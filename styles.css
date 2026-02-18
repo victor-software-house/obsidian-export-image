@@ -245,35 +245,14 @@ If your plugin does not need CSS, delete this file.
 
 /* Gutter hidden by default */
 .export-image-gutter {
-  display: none;
+  display: none !important;
 }
 
-/* Show gutter when enabled */
-.show-gutter .export-image-editor-wrapper {
-  display: flex;
-  align-items: stretch;
-}
-.show-gutter .export-image-editor-wrapper > .markdown-source-view {
-  flex: 1;
-  min-width: 0;
-}
+/* Show gutter when enabled - restore original CM layout */
 .show-gutter .export-image-gutter {
-  display: block;
-  position: relative;
-  flex-shrink: 0;
-  border-right: 1px solid var(--background-modifier-border);
-}
-/* Reset CodeMirror absolute positioning inside exported gutter */
-.show-gutter .export-image-gutter .cm-gutter {
-  position: relative;
-  height: auto;
-  min-height: 100%;
-}
-.show-gutter .export-image-gutter .cm-gutterElement {
-  position: relative;
-  top: auto !important;
-  height: auto !important;
-  padding: 0 8px;
+  display: flex !important;
+  position: relative !important;
+  min-height: 0 !important;
 }
 
 .export-image-split-hr hr {
