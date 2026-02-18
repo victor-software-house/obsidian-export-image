@@ -129,6 +129,7 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
       if (gutterInClone) {
         (gutterInClone as HTMLElement).classList.add('export-image-gutter');
         (gutterInClone as HTMLElement).style.minHeight = '0';
+        (gutterInClone as HTMLElement).style.position = 'relative';
       }
 
       // Strip editor scroll padding from content

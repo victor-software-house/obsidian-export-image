@@ -263,7 +263,9 @@ If your plugin does not need CSS, delete this file.
 }
 .show-gutter .export-image-gutter {
   display: flex !important;
+  position: relative !important;
   min-height: 0 !important;
+  height: auto !important;
   grid-column: 1;
   grid-row: 1;
 }
