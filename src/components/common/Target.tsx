@@ -99,6 +99,23 @@ const Target = forwardRef<
     });
   }, [markdownEl]);
 
+  // Sync gutter height with content height via JS
+  useEffect(() => {
+    if (!contentRef.current || !setting.showGutter) return;
+    const gutter = contentRef.current.querySelector<HTMLElement>('.export-image-gutter');
+    const content = contentRef.current.querySelector<HTMLElement>('.cm-content');
+    if (!gutter || !content) return;
+
+    const sync = () => {
+      gutter.style.height = `${content.offsetHeight}px`;
+    };
+
+    sync();
+    const observer = new ResizeObserver(sync);
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [markdownEl, setting.showGutter]);
+
   useImperativeHandle(ref, () => ({
     element: clipRef.current!,
     contentElement: rootRef.current!,

@@ -256,22 +256,12 @@ If your plugin does not need CSS, delete this file.
   display: none !important;
 }
 
-/* Show gutter when enabled - grid forces equal row height */
-.show-gutter .cm-contentContainer {
-  display: grid !important;
-  grid-template-columns: auto 1fr;
-}
+/* Show gutter when enabled */
 .show-gutter .export-image-gutter {
   display: flex !important;
   position: relative !important;
   min-height: 0 !important;
-  height: auto !important;
-  grid-column: 1;
-  grid-row: 1;
-}
-.show-gutter .cm-content {
-  grid-column: 2;
-  grid-row: 1;
+  overflow: hidden;
 }
 
 .export-image-split-hr hr {
