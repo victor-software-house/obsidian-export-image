@@ -41,6 +41,7 @@ declare type ISettings = {
     width?: number;
     height?: number;
   };
+  showGutter: boolean;
   split: {
     height: number;
     overlap: number;

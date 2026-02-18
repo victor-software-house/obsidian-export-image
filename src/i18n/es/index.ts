@@ -71,6 +71,10 @@ const es = {
     metadata: {
       label: 'Mostrar metadatos',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Formato del archivo de salida',
       description: 'Las imágenes en formato PNG por defecto deberían satisfacer la mayoría de necesidades, pero para soportar mejor los escenarios de uso: 1. Soporte para exportar imágenes con fondos normales y transparentes; 2. Soporte para exportar imágenes en formato JPG para lograr tamaños de archivo más pequeños, aunque puede que no sea posible copiar directamente al portapapeles; 3. Soporte para exportar al formato de PDF de una sola página, que difiere de los formatos de papel PDF habituales, por favor, ten cuidado de no usarlo incorrectamente.',

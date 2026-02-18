@@ -10,6 +10,7 @@ export const DEFAULT_SETTINGS: ISettings = {
   showMetadata: false,
   recursive: false,
   quickExportSelection: false,
+  showGutter: false,
   padding: {
     top: 6,
     right: 6,

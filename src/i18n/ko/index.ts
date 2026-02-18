@@ -69,6 +69,10 @@ const ko = {
     metadata: {
       label: '메타데이터 표시',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: '출력 파일 형식',
       description:

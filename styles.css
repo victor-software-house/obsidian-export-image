@@ -243,6 +243,21 @@ If your plugin does not need CSS, delete this file.
   height: auto;
 }
 
+/* Gutter hidden by default */
+.export-image-gutter {
+  display: none;
+}
+
+/* Show gutter when enabled */
+.show-gutter .export-image-editor-wrapper {
+  display: flex;
+}
+.show-gutter .export-image-gutter {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 .export-image-split-hr hr {
   opacity: 0;
   height: 0;

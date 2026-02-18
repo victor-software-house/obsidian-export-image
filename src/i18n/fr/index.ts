@@ -75,6 +75,10 @@ const fr = {
     metadata: {
       label: 'Afficher les métadonnées',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Format de fichier de sortie',
       description:

@@ -190,7 +190,7 @@ const Target = forwardRef<
                   </div>
                 </div>
               )}
-            <div ref={contentRef} className={`export-image-split-${setting.split.mode} export-image-markdown`}></div>
+            <div ref={contentRef} className={clsx(`export-image-split-${setting.split.mode} export-image-markdown`, setting.showGutter && 'show-gutter')}></div>
           </div>
         </Watermark>
         {setting.authorInfo.show

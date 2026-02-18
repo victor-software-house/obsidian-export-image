@@ -69,6 +69,10 @@ const ro = {
     metadata: {
       label: 'Afișează metadatele',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Formatul fișierului de ieșire',
       description:

@@ -66,6 +66,10 @@ const id = {
     metadata: {
       label: 'Tampilkan metadata',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Format file keluaran',
       description:

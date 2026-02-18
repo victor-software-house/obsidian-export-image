@@ -67,6 +67,10 @@ const cs = {
     metadata: {
       label: 'Zobrazit metadata',
     },
+    gutter: {
+      label: 'Show gutter',
+      description: 'Include the editor gutter (line numbers, fold indicators) in the exported image.',
+    },
     format: {
       title: 'Formát výstupního souboru',
       description:

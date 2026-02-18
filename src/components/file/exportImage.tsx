@@ -121,20 +121,29 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
       const contentDiv = view.contentEl.querySelector('.cm-content.cm-lineWrapping');
       const tempDiv = document.createElement('div');
       tempDiv.className = "markdown-source-view mod-cm6 is-live-preview";
-      
+
       // 首先添加内容
       tempDiv.innerHTML = contentDiv ? contentDiv.innerHTML : "";
-      
+
       // 删除所有带有 cm-active class 的元素
       tempDiv.querySelectorAll('.cm-active').forEach(el => el.classList.remove('cm-active'));
-      
+
       // 删除所有 edit-block-button 和 callout-fold 元素
       tempDiv.querySelectorAll('.edit-block-button, .callout-fold, .cm-widgetBuffer, .table-col-drag-handle, .cm-fold-indicator, .table-row-btn, .table-row-drag-handle, .table-col-btn, .table-row-drag-handle').forEach(el => el.remove());
-      
+
+      // Clone gutter from the editor view
+      let gutterHtml = '';
+      const gutterEl = view.contentEl.querySelector('.cm-gutters');
+      if (gutterEl) {
+        const gutterClone = gutterEl.cloneNode(true) as HTMLElement;
+        gutterClone.style.position = 'relative';
+        gutterClone.classList.add('export-image-gutter');
+        gutterHtml = gutterClone.outerHTML;
+      }
+
       // 构建完整的HTML，包括样式
       const cssStyles = `
         <style>
-          /* 可以在这里添加更多自定义样式 */
           /* 修复列表缩进在渲染时的问题 */
           .export-image-root .list-bullet {
               margin-left: -24px !important;
@@ -147,11 +156,14 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
           }
         </style>
       `;
-      
-      // 将div的HTML和样式组合起来
-      html = `<div class="export-image-root markdown-source-view mod-cm6 is-live-preview">
-        ${cssStyles}
-        ${tempDiv.innerHTML}
+
+      // Wrap gutter and content in a flex container
+      html = `<div class="export-image-editor-wrapper">
+        ${gutterHtml}
+        <div class="markdown-source-view mod-cm6 is-live-preview">
+          ${cssStyles}
+          ${tempDiv.innerHTML}
+        </div>
       </div>`;
       
       codeMirror.viewState.printing = false;
