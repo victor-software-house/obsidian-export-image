@@ -128,11 +128,12 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
       // Outside .cm-editor the container is plain block, so replicate flex inline.
       containerClone.style.display = 'flex';
 
-      // Tag the gutter; only strip min-height (editor document height)
+      // Tag the gutter; strip baked-in editor dimensions
       const gutterInClone = containerClone.querySelector('.cm-gutters');
       if (gutterInClone) {
         (gutterInClone as HTMLElement).classList.add('export-image-gutter');
         (gutterInClone as HTMLElement).style.minHeight = '0';
+        (gutterInClone as HTMLElement).style.height = 'auto';
         (gutterInClone as HTMLElement).style.position = 'relative';
       }
 
