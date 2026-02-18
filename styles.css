@@ -243,6 +243,13 @@ If your plugin does not need CSS, delete this file.
   height: auto;
 }
 
+/* cm-content needs explicit flex sizing; CM6's rule requires the full
+   .cm-scroller > .cm-sizer chain which we don't replicate in the export */
+.export-image-markdown .cm-content {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
 /* Gutter hidden by default */
 .export-image-gutter {
   display: none !important;
