@@ -136,8 +136,9 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
       const gutterEl = view.contentEl.querySelector('.cm-gutters');
       if (gutterEl) {
         const gutterClone = gutterEl.cloneNode(true) as HTMLElement;
-        gutterClone.style.position = 'relative';
         gutterClone.classList.add('export-image-gutter');
+        // Strip CodeMirror inline styles that break layout outside the editor
+        gutterClone.style.cssText = '';
         gutterHtml = gutterClone.outerHTML;
       }
 
