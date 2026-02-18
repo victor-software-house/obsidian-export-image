@@ -131,6 +131,7 @@ async function loadDocumentContent(app: App, el: HTMLElement) {
         (gutterInClone as HTMLElement).querySelectorAll<HTMLElement>('.cm-gutterElement').forEach(el => {
           el.style.height = '';
           el.style.marginTop = '';
+          el.style.paddingTop = '';
         });
       }
 
